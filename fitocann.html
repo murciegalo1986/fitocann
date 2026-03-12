@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fitocann | Consultoría Cannabis Chile</title>
+<meta name="description" content="Consultoría científica y regulatoria especializada en cannabis medicinal y cáñamo industrial en Chile."/>
+<meta property="og:title" content="Fitocann | Consultoría en Cannabis y Cáñamo en Chile"/>
+<meta property="og:description" content="Consultoría científica y regulatoria para empresas que desarrollan proyectos de cannabis medicinal y cáñamo industrial."/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #F5F2EC;
+  --navy: #0E1A6E;
+  --navy-light: #1A2A8A;
+  --steel: #5A9ABF;
+  --yellow: #E8D930;
+  --green: #5AAF1A;
+  --ink: #0A0F2E;
+  --ink-dim: rgba(10,15,46,0.45);
+  --border: rgba(14,26,110,0.1);
+  --border-mid: rgba(14,26,110,0.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+.cursor{width:8px;height:8px;background:var(--navy);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s}
+.cursor-ring{width:32px;height:32px;border:1.5px solid var(--steel);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease;opacity:.5}
+
+/* NOISE */
+.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.022;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px}
+
+/* BLOBS */
+.blob-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(100px)}
+.blob-1{width:680px;height:680px;background:radial-gradient(circle,rgba(90,154,191,.36) 0%,transparent 70%);top:-180px;right:-60px;animation:bd1 20s ease-in-out infinite}
+.blob-2{width:520px;height:520px;background:radial-gradient(circle,rgba(90,175,26,.2) 0%,transparent 70%);bottom:8%;left:-60px;animation:bd2 24s ease-in-out infinite}
+.blob-3{width:420px;height:420px;background:radial-gradient(circle,rgba(232,217,48,.22) 0%,transparent 70%);top:52%;right:12%;animation:bd3 28s ease-in-out infinite}
+.blob-4{width:360px;height:360px;background:radial-gradient(circle,rgba(14,26,110,.09) 0%,transparent 70%);top:28%;left:28%;animation:bd4 22s ease-in-out infinite}
+@keyframes bd1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-55px,75px) scale(1.07)}66%{transform:translate(38px,-38px) scale(.94)}}
+@keyframes bd2{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(75px,-55px) scale(1.1)}70%{transform:translate(-28px,48px) scale(.92)}}
+@keyframes bd3{0%,100%{transform:translate(0,0)}50%{transform:translate(-65px,-48px) scale(1.12)}}
+@keyframes bd4{0%,100%{transform:translate(0,0)}50%{transform:translate(55px,75px) scale(1.06)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:28px 60px;border-bottom:1px solid transparent;transition:all .4s ease}
+nav.scrolled{border-color:var(--border);backdrop-filter:blur(24px);background:rgba(245,242,236,.92);padding:18px 60px}
+.logo{font-family:'Playfair Display',serif;font-size:22px;letter-spacing:.06em;color:var(--navy);font-weight:600;cursor:none}
+.logo span{color:var(--yellow)}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);text-decoration:none;transition:color .25s;cursor:none}
+.nav-links a:hover,.nav-links a.active{color:var(--navy)}
+.nav-cta{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:10px 24px;border:1.5px solid var(--navy);color:var(--navy);background:transparent;cursor:none;transition:all .25s}
+.nav-cta:hover{background:var(--navy);color:var(--bg)}
+
+/* SHARED */
+.section-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.section-label::before{content:'';width:28px;height:1px;background:var(--steel)}
+.btn-primary{padding:15px 36px;background:var(--navy);color:var(--bg);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border:none;cursor:none;transition:all .25s}
+.btn-primary:hover{background:var(--navy-light)}
+.btn-ghost{padding:15px 36px;background:transparent;color:var(--ink-dim);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border:1.5px solid var(--border-mid);cursor:none;transition:all .25s;display:inline-block}
+.btn-ghost:hover{border-color:var(--navy);color:var(--navy)}
+section{position:relative;z-index:2}
+.page{display:none}.page.active{display:block}
+
+/* FADE UP */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 60px 90px;position:relative;z-index:2}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 20%,transparent 80%)}
+.hero-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:14px;margin-bottom:30px}
+.hero-tag::before{content:'';width:36px;height:1px;background:var(--steel)}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(50px,7.5vw,108px);line-height:.97;font-weight:500;color:var(--navy);max-width:860px;margin-bottom:40px;letter-spacing:-.025em}
+.hero h1 em{font-style:italic;color:var(--steel)}
+.hero-sub{font-size:16px;line-height:1.75;color:var(--ink-dim);max-width:560px;font-weight:300;margin-bottom:52px}
+.hero-actions{display:flex;gap:16px;align-items:center}
+.hero-scroll{position:absolute;right:60px;bottom:90px;display:flex;flex-direction:column;align-items:center;gap:12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--steel)}
+.hero-scroll-line{width:1px;height:56px;background:linear-gradient(to bottom,var(--steel),transparent);animation:scrollPulse 2.2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:.35;transform:scaleY(1)}50%{opacity:1;transform:scaleY(.55)}}
+
+/* NUMBERS */
+.numbers-bar{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2;background:rgba(255,255,255,.5);backdrop-filter:blur(16px)}
+.number-item{padding:52px 60px;border-right:1px solid var(--border)}
+.number-item:last-child{border-right:none}
+.number-val{font-family:'Playfair Display',serif;font-size:54px;font-weight:400;color:var(--navy);line-height:1;margin-bottom:10px}
+.number-val span{color:var(--yellow)}
+.number-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim)}
+
+/* ABOUT */
+.about{padding:130px 60px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;position:relative;z-index:2}
+.about h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,54px);font-weight:500;color:var(--navy);line-height:1.1;letter-spacing:-.015em;margin-bottom:28px}
+.about h2 em{font-style:italic;color:var(--steel)}
+.about p{font-size:15px;line-height:1.85;color:var(--ink-dim);font-weight:300;margin-bottom:18px}
+.about-visual{position:relative;height:500px}
+.about-box-main{position:absolute;inset:0;border:1px solid var(--border);background:rgba(255,255,255,.55);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.about-tag{position:absolute;bottom:-1px;right:-1px;padding:14px 22px;background:var(--bg);border:1px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--steel)}
+
+/* SERVICES GRID */
+.services{padding:130px 60px;position:relative;z-index:2}
+.services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+.services h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,54px);font-weight:500;color:var(--navy);line-height:1.1;max-width:480px}
+.services h2 em{font-style:italic;color:var(--steel)}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.service-card{background:rgba(255,255,255,.58);backdrop-filter:blur(10px);padding:48px 40px;cursor:none;position:relative;overflow:hidden;transition:background .3s}
+.service-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--yellow);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.service-card:hover{background:rgba(255,255,255,.92)}
+.service-card:hover::after{transform:scaleX(1)}
+.service-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--steel);margin-bottom:28px}
+.service-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--navy);line-height:1.3;margin-bottom:14px}
+.service-desc{font-size:13px;line-height:1.75;color:var(--ink-dim);font-weight:300}
+.service-arrow{position:absolute;top:40px;right:40px;color:var(--steel);opacity:0;transition:opacity .3s,transform .3s;font-size:16px}
+.service-card:hover .service-arrow{opacity:1;transform:translate(4px,-4px)}
+
+/* INDUSTRIES */
+.industries{padding:130px 60px;border-top:1px solid var(--border);position:relative;z-index:2}
+.industries h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,54px);font-weight:500;color:var(--navy);margin-bottom:56px;max-width:580px;line-height:1.1}
+.industries h2 em{font-style:italic;color:var(--steel)}
+.industry-list{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.industry-item{background:rgba(255,255,255,.52);backdrop-filter:blur(8px);padding:36px 28px;cursor:none;transition:background .3s}
+.industry-item:hover{background:rgba(255,255,255,.92)}
+.industry-dot{width:6px;height:6px;border-radius:50%;background:var(--green);margin-bottom:18px}
+.industry-name{font-family:'Playfair Display',serif;font-size:15px;color:var(--navy);line-height:1.4}
+
+/* APPROACH */
+.approach{padding:130px 60px;border-top:1px solid var(--border);position:relative;z-index:2}
+.approach-inner{display:grid;grid-template-columns:1fr 2fr;gap:100px}
+.approach h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,44px);font-weight:500;color:var(--navy);line-height:1.2;position:sticky;top:120px}
+.approach h2 em{font-style:italic;color:var(--steel)}
+.approach-items{display:flex;flex-direction:column}
+.approach-item{padding:40px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:60px 1fr;gap:28px;cursor:none;transition:all .3s}
+.approach-item:hover .approach-item-title{color:var(--steel)}
+.approach-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--steel);letter-spacing:.1em;padding-top:4px}
+.approach-item-title{font-family:'Playfair Display',serif;font-size:21px;color:var(--navy);margin-bottom:10px;transition:color .3s}
+.approach-item-desc{font-size:14px;line-height:1.85;color:var(--ink-dim);font-weight:300}
+
+/* CTA */
+.cta-block{padding:150px 60px;border-top:1px solid var(--border);display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:2}
+.cta-block h2{font-family:'Playfair Display',serif;font-size:clamp(38px,5.5vw,80px);font-weight:500;color:var(--navy);line-height:1.05;max-width:760px;margin-bottom:22px;letter-spacing:-.025em}
+.cta-block h2 em{font-style:italic;color:var(--steel)}
+.cta-block p{font-size:15px;color:var(--ink-dim);font-weight:300;max-width:460px;line-height:1.8;margin-bottom:48px}
+.cta-actions{display:flex;gap:16px}
+
+/* PAGE HERO */
+.page-hero{padding:160px 60px 80px;border-bottom:1px solid var(--border);position:relative;z-index:2}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(40px,6vw,90px);font-weight:500;color:var(--navy);line-height:.97;letter-spacing:-.025em;max-width:800px;margin-bottom:28px}
+.page-hero h1 em{font-style:italic;color:var(--steel)}
+.page-hero p{font-size:17px;line-height:1.85;color:var(--ink-dim);max-width:620px;font-weight:300}
+
+/* MANIFESTO */
+.manifesto{padding:80px 60px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(14,26,110,.04);position:relative;z-index:2}
+.manifesto-quote{font-family:'Playfair Display',serif;font-size:clamp(20px,2.8vw,34px);color:var(--navy);line-height:1.45;font-style:italic;max-width:860px;margin:0 auto;text-align:center}
+.manifesto-quote em{color:var(--steel);font-style:normal}
+
+/* SERVICES LIST */
+.services-list{padding:80px 60px;position:relative;z-index:2}
+.service-row{padding:52px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:80px 1fr auto;gap:40px;align-items:start;cursor:none;transition:all .3s}
+.service-row:first-child{border-top:1px solid var(--border)}
+.service-row-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--steel);letter-spacing:.15em;padding-top:8px}
+.service-row-title{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,34px);font-weight:500;color:var(--navy);line-height:1.15;margin-bottom:16px;transition:color .3s}
+.service-row:hover .service-row-title{color:var(--steel)}
+.service-row-desc{font-size:14px;line-height:1.85;color:var(--ink-dim);font-weight:300;max-width:680px;margin-bottom:24px}
+.service-items{list-style:none;display:flex;flex-direction:column;gap:10px}
+.service-items li{display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--ink-dim);font-weight:300;line-height:1.6}
+.service-items li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--steel);margin-top:7px;flex-shrink:0}
+.service-row-arrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--steel);white-space:nowrap;padding-top:8px;opacity:0;transition:opacity .3s}
+.service-row:hover .service-row-arrow{opacity:1}
+
+/* TEAM & VALORES */
+.team-grid,.valores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.valores-grid{grid-template-columns:repeat(2,1fr)}
+.team-card,.valor-card{background:rgba(255,255,255,.55);backdrop-filter:blur(10px);padding:44px 36px;transition:background .3s;cursor:none}
+.team-card:hover,.valor-card:hover{background:rgba(255,255,255,.9)}
+.team-role,.valor-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);margin-bottom:14px}
+.team-name,.valor-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:12px;font-weight:500}
+.team-bio,.valor-desc{font-size:13px;line-height:1.75;color:var(--ink-dim);font-weight:300}
+
+/* CONTACT */
+.contact-layout{padding:100px 60px;display:grid;grid-template-columns:1fr 1fr;gap:100px;position:relative;z-index:2}
+.contact-info h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,48px);font-weight:500;color:var(--navy);line-height:1.1;margin-bottom:24px}
+.contact-info h2 em{font-style:italic;color:var(--steel)}
+.contact-info p{font-size:15px;line-height:1.85;color:var(--ink-dim);font-weight:300;margin-bottom:16px}
+.contact-data{display:flex;flex-direction:column;gap:20px;margin-top:40px;padding-top:40px;border-top:1px solid var(--border)}
+.contact-data-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);margin-bottom:4px}
+.contact-data-val{font-size:15px;color:var(--navy)}
+.contact-form{display:flex;flex-direction:column;gap:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-field{display:flex;flex-direction:column;gap:8px}
+.form-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim)}
+.form-input{padding:14px 16px;background:rgba(255,255,255,.7);border:1px solid var(--border);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;outline:none;transition:border-color .25s}
+.form-input:focus{border-color:var(--steel)}
+textarea.form-input{resize:vertical;min-height:140px}
+select.form-input{appearance:none}
+.form-submit{padding:16px 40px;background:var(--navy);color:var(--bg);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:none;transition:background .25s;align-self:flex-start}
+.form-submit:hover{background:var(--navy-light)}
+.form-confirm{background:rgba(255,255,255,.6);border:1px solid var(--border);padding:60px 48px;text-align:center;display:none}
+.form-confirm.active{display:block}
+.form-confirm-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);margin-bottom:20px}
+.form-confirm-title{font-family:'Playfair Display',serif;font-size:28px;color:var(--navy);margin-bottom:14px;font-weight:500}
+.form-confirm-sub{font-size:14px;color:var(--ink-dim);font-weight:300;line-height:1.7}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:64px 60px 40px;position:relative;z-index:2;background:rgba(255,255,255,.45);backdrop-filter:blur(16px)}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:56px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:26px;color:var(--navy);font-weight:600;cursor:none}
+.footer-logo span{color:var(--yellow)}
+.footer-tagline{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);margin-top:8px}
+.footer-links{display:flex;gap:80px}
+.footer-col h4{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-col li{font-size:13px;color:var(--ink-dim);cursor:none;transition:color .3s;font-weight:300}
+.footer-col li:hover{color:var(--navy)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:26px;display:flex;justify-content:space-between}
+.footer-copy{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:rgba(10,15,46,.3)}
+
+/* SECTION TITLES */
+.section-h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,48px);font-weight:500;color:var(--navy);line-height:1.1;margin-bottom:48px;max-width:560px}
+.section-h2 em{font-style:italic;color:var(--steel)}
+.padded-section{padding:80px 60px;position:relative;z-index:2}
+
+@media(max-width:768px){
+  nav,nav.scrolled{padding:18px 24px}
+  .nav-links,.nav-cta{display:none}
+  .hero{padding:0 24px 64px}
+  .hero h1{font-size:40px}
+  .numbers-bar{grid-template-columns:1fr}
+  .number-item{border-right:none;border-bottom:1px solid var(--border);padding:36px 24px}
+  .about{grid-template-columns:1fr;padding:80px 24px;gap:48px}
+  .about-visual{height:300px}
+  .services,.industries,.approach,.cta-block,.padded-section{padding:80px 24px}
+  .services-header{flex-direction:column;align-items:flex-start;gap:20px}
+  .services-grid,.team-grid{grid-template-columns:1fr}
+  .valores-grid{grid-template-columns:1fr}
+  .industry-list{grid-template-columns:1fr 1fr}
+  .approach-inner{grid-template-columns:1fr;gap:40px}
+  .approach h2{position:static}
+  .cta-actions{flex-direction:column;align-items:stretch}
+  .page-hero,.manifesto{padding-left:24px;padding-right:24px}
+  .services-list,.contact-layout{padding:60px 24px}
+  .service-row{grid-template-columns:1fr;gap:16px}
+  .form-row{grid-template-columns:1fr}
+  footer{padding:48px 24px 32px}
+  .footer-top{flex-direction:column;gap:36px}
+  .footer-links{flex-direction:column;gap:36px}
+}
+</style>
+</head>
+<body>
+
+<!-- BLOBS -->
+<div class="blob-layer">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
+<div class="noise"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo" onclick="navigate('home')">Fito<span>cann</span></div>
+  <ul class="nav-links">
+    <li><a onclick="navigate('home')" data-page="home" class="active">Inicio</a></li>
+    <li><a onclick="navigate('servicios')" data-page="servicios">Servicios</a></li>
+    <li><a onclick="navigate('nosotros')" data-page="nosotros">Nosotros</a></li>
+    <li><a onclick="navigate('contacto')" data-page="contacto">Contacto</a></li>
+  </ul>
+  <button class="nav-cta" onclick="navigate('contacto')">Consulta inicial</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE: HOME -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-tag">Consultoría regulatoria · Chile</div>
+    <h1>Regulación <em>científica</em><br>para la industria<br>del cannabis</h1>
+    <p class="hero-sub">Acompañamos a empresas, laboratorios y proyectos productivos que necesitan desenvolverse en una de las industrias más reguladas del mundo. Integramos conocimiento científico, técnico y normativo para guiar cada etapa del desarrollo.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="navigate('contacto')">Solicitar evaluación</button>
+      <button class="btn-ghost" onclick="navigate('servicios')">Ver servicios</button>
+    </div>
+    <div class="hero-scroll"><div class="hero-scroll-line"></div>Scroll</div>
+  </section>
+
+  <div class="numbers-bar">
+    <div class="number-item fade-up d1"><div class="number-val">7<span>+</span></div><div class="number-label">Áreas de especialidad</div></div>
+    <div class="number-item fade-up d2"><div class="number-val">100<span>%</span></div><div class="number-label">Proyectos dentro del marco legal</div></div>
+    <div class="number-item fade-up d3"><div class="number-val">5<span>+</span></div><div class="number-label">Disciplinas integradas</div></div>
+  </div>
+
+  <section class="about">
+    <div>
+      <div class="section-label fade-up">Sobre Fitocann</div>
+      <h2 class="fade-up d1">Donde la <em>ciencia</em><br>se encuentra con<br>la regulación</h2>
+      <p class="fade-up d2">Fitocann es una consultora especializada en regulación, estrategia y desarrollo de proyectos relacionados con cannabis medicinal y cáñamo industrial en Chile. Acompañamos a empresas, organizaciones y emprendedores que buscan desarrollar iniciativas dentro de un sector altamente regulado y en constante evolución.</p>
+      <p class="fade-up d3">Creemos que la combinación entre evidencia científica, cumplimiento normativo y planificación estratégica es clave para impulsar proyectos innovadores y viables en el ámbito del cannabis medicinal y el cáñamo industrial.</p>
+      <div class="fade-up d4" style="margin-top:32px"><button class="btn-ghost" onclick="navigate('nosotros')">Conocer el equipo →</button></div>
+    </div>
+    <div class="about-visual fade-up d2">
+      <div class="about-box-main"><svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.22"><path d="M150 265 C150 265 95 198 75 145 C55 92 88 44 150 34 C212 44 245 92 225 145 C205 198 150 265 150 265Z" stroke="#0E1A6E" stroke-width="1.2" fill="none"/><path d="M150 245 C126 212 94 178 66 157 C88 150 118 162 150 188" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 245 C174 212 206 178 234 157 C212 150 182 162 150 188" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 205 C118 178 76 157 46 143 C68 133 108 143 150 167" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 205 C182 178 224 157 254 143 C232 133 192 143 150 167" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 167 C126 149 98 131 70 118 C88 107 120 116 150 138" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 167 C174 149 202 131 230 118 C212 107 180 116 150 138" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 138 C138 118 118 102 97 90 C110 80 136 87 150 108" stroke="#5A9ABF" stroke-width=".8" fill="none"/><path d="M150 138 C162 118 182 102 203 90 C190 80 164 87 150 108" stroke="#5A9ABF" stroke-width=".8" fill="none"/><line x1="150" y1="34" x2="150" y2="265" stroke="#0E1A6E" stroke-width="1"/><circle cx="150" cy="265" r="4" fill="#E8D930" opacity="1"/><circle cx="150" cy="265" r="9" fill="#E8D930" opacity=".18"/></svg></div>
+      <div class="about-tag">Cannabis · Cáñamo · Chile</div>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="services-header">
+      <div>
+        <div class="section-label fade-up">Servicios</div>
+        <h2 class="fade-up d1">Soluciones para<br>cada etapa <em>regulatoria</em></h2>
+      </div>
+      <button class="btn-ghost fade-up" onclick="navigate('servicios')">Ver todos →</button>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-up" onclick="navigate('servicios')"><div class="service-num">01</div><div class="service-title">Consultoría Regulatoria</div><div class="service-desc">Asesoría estratégica para proyectos relacionados con cannabis medicinal y cáñamo industrial.</div><div class="service-arrow">↗</div></div>
+      <div class="service-card fade-up d1" onclick="navigate('servicios')"><div class="service-num">02</div><div class="service-title">Permisos de Cultivo</div><div class="service-desc">Gestión integral de autorizaciones para el cultivo de cannabis y cáñamo.</div><div class="service-arrow">↗</div></div>
+      <div class="service-card fade-up d2" onclick="navigate('servicios')"><div class="service-num">03</div><div class="service-title">Registros Sanitarios</div><div class="service-desc">Elaboración y gestión de expedientes para el registro sanitario de productos cannábicos.</div><div class="service-arrow">↗</div></div>
+      <div class="service-card fade-up d1" onclick="navigate('servicios')"><div class="service-num">04</div><div class="service-title">Farmacia Cannábica</div><div class="service-desc">Asesoría para la implementación y regulación de dispensarios y farmacias cannábicas.</div><div class="service-arrow">↗</div></div>
+      <div class="service-card fade-up d2" onclick="navigate('servicios')"><div class="service-num">05</div><div class="service-title">Alimentos con Cáñamo</div><div class="service-desc">Desarrollo regulatorio para alimentos y suplementos elaborados a partir de cáñamo.</div><div class="service-arrow">↗</div></div>
+      <div class="service-card fade-up d3" onclick="navigate('servicios')"><div class="service-num">06</div><div class="service-title">Cosméticos y PI</div><div class="service-desc">Asesoría para cosméticos cannábicos y protección de activos intangibles.</div><div class="service-arrow">↗</div></div>
+    </div>
+  </section>
+
+  <section class="industries">
+    <div class="section-label fade-up">Industrias</div>
+    <h2 class="fade-up d1">Trabajamos con empresas<br>de toda la <em>cadena</em></h2>
+    <div class="industry-list">
+      <div class="industry-item fade-up"><div class="industry-dot"></div><div class="industry-name">Laboratorios Farmacéuticos</div></div>
+      <div class="industry-item fade-up d1"><div class="industry-dot"></div><div class="industry-name">Agricultura e Industrial</div></div>
+      <div class="industry-item fade-up d2"><div class="industry-dot"></div><div class="industry-name">Empresas de Alimentos</div></div>
+      <div class="industry-item fade-up d3"><div class="industry-dot"></div><div class="industry-name">Industria Cosmética</div></div>
+      <div class="industry-item fade-up d4"><div class="industry-dot"></div><div class="industry-name">Cannabis Medicinal</div></div>
+    </div>
+  </section>
+
+  <section class="approach">
+    <div class="approach-inner">
+      <div>
+        <div class="section-label fade-up">Metodología</div>
+        <h2 class="fade-up d1">Un enfoque <em>integral</em><br>y científico</h2>
+      </div>
+      <div class="approach-items">
+        <div class="approach-item fade-up"><div class="approach-num">01</div><div><div class="approach-item-title">Análisis regulatorio</div><div class="approach-item-desc">Evaluamos rigurosamente el marco normativo vigente para determinar la viabilidad técnica y legal de cada proyecto. Realizamos un diagnóstico profundo que identifica riesgos potenciales y oportunidades estratégicas, garantizando que el camino regulatorio se trace con precisión científica y certidumbre jurídica desde el primer día.</div></div></div>
+        <div class="approach-item fade-up d1"><div class="approach-num">02</div><div><div class="approach-item-title">Estrategia personalizada</div><div class="approach-item-desc">No creemos en soluciones genéricas. Diseñamos una hoja de ruta exclusiva para cada organización, adaptándonos meticulosamente a su etapa de desarrollo, presupuesto y objetivos de negocio. Nuestra estrategia alinea las exigencias normativas con la visión comercial de la empresa.</div></div></div>
+        <div class="approach-item fade-up d2"><div class="approach-num">03</div><div><div class="approach-item-title">Acompañamiento técnico</div><div class="approach-item-desc">Nuestro equipo multidisciplinario actúa como una extensión de su empresa, liderando la ejecución del proceso regulatorio de principio a fin. Brindamos soporte continuo en la gestión de expedientes, respuesta a requerimientos de la autoridad y mediación técnica.</div></div></div>
+        <div class="approach-item fade-up d3"><div class="approach-num">04</div><div><div class="approach-item-title">Cumplimiento sostenible</div><div class="approach-item-desc">Nuestra meta trasciende la obtención de un registro o permiso. Aseguramos que cada proyecto opere dentro del marco legal vigente de manera permanente, estableciendo sistemas de vigilancia y actualización normativa para construir empresas sólidas a largo plazo.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-block">
+    <h2 class="fade-up">Su proyecto merece<br>una <em>estrategia regulatoria</em><br>sólida</h2>
+    <p class="fade-up d1">Transformamos la complejidad regulatoria en oportunidades. Solicite una evaluación inicial para analizar la viabilidad de su proyecto.</p>
+    <div class="cta-actions fade-up d2">
+      <button class="btn-primary" onclick="navigate('contacto')">Solicitar evaluación inicial</button>
+      <button class="btn-ghost" onclick="navigate('nosotros')">Conocer el equipo</button>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE: SERVICIOS -->
+<div class="page" id="page-servicios">
+  <div class="page-hero">
+    <div class="section-label fade-up">Servicios</div>
+    <h1 class="fade-up d1">Consultoría <em>especializada</em><br>en cannabis y cáñamo</h1>
+    <p class="fade-up d2">Fitocann es el aliado estratégico para navegar la complejidad normativa del cannabis medicinal y el cáñamo industrial en Chile. Brindamos asesoría técnica, científica y regulatoria de alto nivel, transformando desafíos legales en oportunidades de negocio sólidas.</p>
+  </div>
+  <div class="manifesto">
+    <div class="manifesto-quote fade-up">"Acompañamos a empresas nacionales e internacionales en el desarrollo de proyectos innovadores, garantizando el cumplimiento de los más altos estándares de <em>calidad y seguridad</em> en cada etapa del proceso."</div>
+  </div>
+  <section class="services-list">
+    <div class="service-row fade-up"><div class="service-row-num">01</div><div><div class="service-row-title">Consultoría Regulatoria</div><div class="service-row-desc">Analizamos la normativa vigente, identificamos riesgos regulatorios y diseñamos estrategias de cumplimiento que permitan desarrollar iniciativas dentro del marco legal aplicable en Chile.</div><ul class="service-items"><li>Análisis regulatorio de proyectos</li><li>Interpretación normativa vigente</li><li>Diseño de estrategia de cumplimiento</li><li>Identificación de riesgos regulatorios</li><li>Acompañamiento frente a autoridades competentes</li></ul></div><div class="service-row-arrow">Ver detalle ↗</div></div>
+    <div class="service-row fade-up d1"><div class="service-row-num">02</div><div><div class="service-row-title">Permisos de Cultivo</div><div class="service-row-desc">Acompañamos a nuestros clientes en la preparación de antecedentes técnicos y regulatorios necesarios para obtener permisos ante las autoridades competentes, asegurando procesos sólidos y bien fundamentados.</div><ul class="service-items"><li>Preparación de antecedentes técnicos</li><li>Gestión ante autoridades competentes</li><li>Evaluación regulatoria de proyectos agrícolas</li><li>Diseño regulatorio de cultivos</li><li>Acompañamiento durante el proceso de autorización</li></ul></div><div class="service-row-arrow">Ver detalle ↗</div></div>
+    <div class="service-row fade-up d2"><div class="service-row-num">03</div><div><div class="service-row-title">Registros Sanitarios</div><div class="service-row-desc">Desarrollamos estrategias regulatorias que permitan cumplir con los requisitos exigidos por la autoridad sanitaria y facilitar la entrada de productos al mercado.</div><ul class="service-items"><li>Elaboración de expedientes regulatorios</li><li>Estrategia de registro sanitario</li><li>Cumplimiento de normativa alimentaria y sanitaria</li><li>Etiquetado de productos</li><li>Gestión ante la autoridad sanitaria</li></ul></div><div class="service-row-arrow">Ver detalle ↗</div></div>
+    <div class="service-row fade-up"><div class="service-row-num">04</div><div><div class="service-row-title">Farmacia Cannábica</div><div class="service-row-desc">Apoyamos en la estructuración normativa, procesos de cumplimiento sanitario y adecuación a los estándares exigidos por la regulación vigente para dispensarios que trabajan con productos cannábicos.</div><ul class="service-items"><li>Implementación de dispensarios</li><li>Estructuración normativa farmacéutica</li><li>Protocolos de dispensación</li><li>Cumplimiento sanitario</li><li>Evaluación regulatoria de formulaciones</li></ul></div><div class="service-row-arrow">Ver detalle ↗</div></div>
+    <div class="service-row fade-up d1"><div class="service-row-num">05</div><div><div class="service-row-title">Alimentos con Cáñamo</div><div class="service-row-desc">Evaluamos la viabilidad normativa, diseñamos estrategias de cumplimiento y acompañamos el proceso necesario para la comercialización de alimentos con cáñamo dentro del marco regulatorio aplicable.</div><ul class="service-items"><li>Análisis de viabilidad regulatoria</li><li>Cumplimiento de normativa alimentaria</li><li>Etiquetado de productos alimentarios</li><li>Registro sanitario</li><li>Acompañamiento en comercialización</li></ul></div><div class="service-row-arrow">Ver detalle ↗</div></div>
+    <div class="service-row fade-up d2"><div class="service-row-num">06</div><div><div class="service-row-title">Cosméticos y Propiedad Intelectual</div><div class="service-row-desc">Desarrollamos regulación de cosméticos derivados del cannabis o del cáñamo, junto con estrategias de protección de activos intangibles como marcas, formulaciones y propiedad intelectual asociada.</div><ul class="service-items"><li>Evaluación regulatoria de formulaciones cosméticas</li><li>Etiquetado y documentación sanitaria</li><li>Registro de marcas cannábicas</li><li>Estrategia de propiedad intelectual</li><li>Protección de formulaciones y desarrollos</li></ul></div><div class="service-row-arrow">Ver detalle ↗</div></div>
+  </section>
+  <section class="cta-block">
+    <h2 class="fade-up">¿Tiene un proyecto<br>de <em>cannabis</em> en mente?</h2>
+    <p class="fade-up d1">Contáctenos para una evaluación regulatoria inicial sin costo. Analizamos su proyecto y le proponemos un camino viable.</p>
+    <div class="cta-actions fade-up d2">
+      <button class="btn-primary" onclick="navigate('contacto')">Solicitar evaluación</button>
+      <button class="btn-ghost" onclick="navigate('nosotros')">Conocer el equipo</button>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE: NOSOTROS -->
+<div class="page" id="page-nosotros">
+  <div class="page-hero">
+    <div class="section-label fade-up">Nosotros</div>
+    <h1 class="fade-up d1">Una consultora <em>científica</em><br>para una industria compleja</h1>
+    <p class="fade-up d2">El equipo de Fitocann está integrado por un grupo de profesionales de alto nivel, especializados en las áreas críticas que definen el éxito de un proyecto en Chile. Combinamos la precisión de la química farmacéutica, el rigor del derecho regulatorio, la innovación en nutrición y alimentos y la visión estratégica en desarrollo de productos.</p>
+  </div>
+  <section class="about" style="border-top:1px solid var(--border)">
+    <div>
+      <div class="section-label fade-up">Nuestra misión</div>
+      <h2 class="fade-up d1">Transformar la complejidad<br>técnica en <em>claridad operativa</em></h2>
+      <p class="fade-up d2">Entendemos que el mercado del cannabis y el cáñamo exige algo más que asesoría: requiere un compromiso ético y técnico. Por ello, nuestro enfoque interdisciplinario nos permite abordar cada desafío desde una perspectiva 360°.</p>
+      <p class="fade-up d3">Ofrecemos soluciones que no solo cumplen con el marco legal y sanitario vigente, sino que elevan los estándares de la industria hacia la excelencia. Nuestra misión es simple: que su empresa lidere el mercado con seguridad y respaldo científico.</p>
+    </div>
+    <div class="about-visual fade-up d2">
+      <div class="about-box-main"><svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.22"><path d="M150 265 C150 265 95 198 75 145 C55 92 88 44 150 34 C212 44 245 92 225 145 C205 198 150 265 150 265Z" stroke="#0E1A6E" stroke-width="1.2" fill="none"/><path d="M150 245 C126 212 94 178 66 157 C88 150 118 162 150 188" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 245 C174 212 206 178 234 157 C212 150 182 162 150 188" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 205 C118 178 76 157 46 143 C68 133 108 143 150 167" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 205 C182 178 224 157 254 143 C232 133 192 143 150 167" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 167 C126 149 98 131 70 118 C88 107 120 116 150 138" stroke="#5A9ABF" stroke-width=".9" fill="none"/><path d="M150 167 C174 149 202 131 230 118 C212 107 180 116 150 138" stroke="#5A9ABF" stroke-width=".9" fill="none"/><line x1="150" y1="34" x2="150" y2="265" stroke="#0E1A6E" stroke-width="1"/><circle cx="150" cy="265" r="4" fill="#E8D930" opacity="1"/><circle cx="150" cy="265" r="9" fill="#E8D930" opacity=".18"/></svg></div>
+      <div class="about-tag">Chile · Regulación · Ciencia</div>
+    </div>
+  </section>
+  <section class="padded-section" style="border-top:1px solid var(--border)">
+    <div class="section-label fade-up">Equipo</div>
+    <h2 class="section-h2 fade-up d1">Profesionales <em>especializados</em><br>en cada área clave</h2>
+    <div class="team-grid">
+      <div class="team-card fade-up"><div class="team-role">Regulación Sanitaria</div><div class="team-name">Especialista</div><div class="team-bio">Experto en normativa sanitaria aplicada a la industria del cannabis medicinal y el cáñamo industrial en Chile.</div></div>
+      <div class="team-card fade-up d1"><div class="team-role">Química Farmacéutica</div><div class="team-name">Especialista</div><div class="team-bio">Especialista en formulaciones, desarrollo de productos cannábicos y cumplimiento de estándares farmacéuticos.</div></div>
+      <div class="team-card fade-up d2"><div class="team-role">Derecho Regulatorio</div><div class="team-name">Especialista</div><div class="team-bio">Profesional en interpretación normativa, registro de marcas y estructuración legal de activos cannábicos.</div></div>
+      <div class="team-card fade-up d1"><div class="team-role">Nutrición y Alimentos</div><div class="team-name">Especialista</div><div class="team-bio">Especialista en normativa alimentaria y registro sanitario de productos derivados del cáñamo.</div></div>
+      <div class="team-card fade-up d2"><div class="team-role">Agronomía</div><div class="team-name">Especialista</div><div class="team-bio">Profesional en gestión de permisos de cultivo y cumplimiento normativo para cannabis y cáñamo.</div></div>
+      <div class="team-card fade-up d3"><div class="team-role">Estrategia Empresarial</div><div class="team-name">Especialista</div><div class="team-bio">Responsable de coordinación estratégica y acompañamiento regulatorio integral en proyectos cannábicos.</div></div>
+    </div>
+  </section>
+  <section class="padded-section" style="border-top:1px solid var(--border)">
+    <div class="section-label fade-up">Valores</div>
+    <h2 class="section-h2 fade-up d1">Lo que nos <em>define</em></h2>
+    <div class="valores-grid">
+      <div class="valor-card fade-up"><div class="valor-num">01</div><div class="valor-title">Rigor científico</div><div class="valor-desc">En una industria en constante evolución, la base técnica lo es todo. Cada recomendación, informe o estrategia que entregamos está fundamentada en análisis científicos y normativos de primer nivel. Aplicamos metodologías estrictas para asegurar que cada paso técnico sea sólido, replicable y de estándar internacional.</div></div>
+      <div class="valor-card fade-up d1"><div class="valor-num">02</div><div class="valor-title">Cumplimiento ante todo</div><div class="valor-desc">Operamos exclusivamente dentro del marco legal vigente, con un compromiso ético innegociable. Para nosotros, la regulación no es un obstáculo, sino el marco de trabajo que garantiza la seguridad y permanencia de su inversión. Ayudamos a navegar los procesos sanitarios y legales con total transparencia.</div></div>
+      <div class="valor-card fade-up d2"><div class="valor-num">03</div><div class="valor-title">Enfoque multidisciplinario</div><div class="valor-desc">La industria del cannabis y el cáñamo es compleja por naturaleza y exige una visión integral. Nuestro equipo integra conocimientos de farmacéutica, agronomía, derecho y desarrollo de productos. Esta sinergia nos permite anticipar problemas y ofrecer soluciones 360° que cubren todas las aristas de un proyecto exitoso.</div></div>
+      <div class="valor-card fade-up d3"><div class="valor-num">04</div><div class="valor-title">Acompañamiento real</div><div class="valor-desc">En Fitocann no entregamos solo informes técnicos; construimos relaciones de confianza. Acompañamos a nuestros clientes en cada etapa crítica del proceso regulatorio, desde la planificación inicial hasta la obtención de autorizaciones finales. Estamos con usted en el terreno y en la oficina.</div></div>
+    </div>
+  </section>
+  <section class="cta-block">
+    <h2 class="fade-up">¿Listo para desarrollar<br>su proyecto con <em>rigor científico</em>?</h2>
+    <p class="fade-up d1">Nuestro equipo está disponible para analizar su proyecto y diseñar una estrategia regulatoria viable en Chile.</p>
+    <div class="cta-actions fade-up d2">
+      <button class="btn-primary" onclick="navigate('contacto')">Contactar al equipo</button>
+      <button class="btn-ghost" onclick="navigate('servicios')">Ver servicios</button>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE: CONTACTO -->
+<div class="page" id="page-contacto">
+  <div class="page-hero">
+    <div class="section-label fade-up">Contacto</div>
+    <h1 class="fade-up d1">Hablemos de<br>su <em>proyecto</em></h1>
+    <p class="fade-up d2">Si su empresa está desarrollando un proyecto relacionado con cannabis medicinal o cáñamo industrial, nuestro equipo puede acompañarlo en la evaluación regulatoria y el diseño de una estrategia viable dentro del marco legal vigente en Chile.</p>
+  </div>
+  <section class="contact-layout">
+    <div class="contact-info fade-up">
+      <div class="section-label">Evaluación inicial</div>
+      <h2>Solicite una<br>consulta <em>sin costo</em></h2>
+      <p>Analizamos su proyecto, identificamos los requerimientos regulatorios aplicables y le proponemos un camino viable dentro del marco legal vigente.</p>
+      <p>Trabajamos con empresas nacionales e internacionales en todas las etapas del desarrollo de proyectos cannábicos en Chile.</p>
+      <div class="contact-data">
+        <div><div class="contact-data-label">País</div><div class="contact-data-val">Chile</div></div>
+        <div><div class="contact-data-label">Email</div><div class="contact-data-val">contacto@fitocann.cl</div></div>
+        <div><div class="contact-data-label">Industria</div><div class="contact-data-val">Cannabis medicinal y cáñamo industrial</div></div>
+      </div>
+    </div>
+    <div class="fade-up d1">
+      <div id="contact-form" class="contact-form">
+        <div class="form-row">
+          <div class="form-field"><label class="form-label">Nombre</label><input class="form-input" type="text" placeholder="Su nombre"/></div>
+          <div class="form-field"><label class="form-label">Empresa</label><input class="form-input" type="text" placeholder="Nombre de la empresa"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label class="form-label">Correo electrónico</label><input class="form-input" type="email" placeholder="correo@empresa.cl"/></div>
+          <div class="form-field"><label class="form-label">Teléfono</label><input class="form-input" type="tel" placeholder="+56 9 ..."/></div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Tipo de proyecto</label>
+          <select class="form-input"><option value="">Seleccione una opción</option><option>Consultoría Regulatoria</option><option>Permisos de Cultivo</option><option>Registros Sanitarios</option><option>Farmacia Cannábica</option><option>Alimentos con Cáñamo</option><option>Cosméticos y Propiedad Intelectual</option><option>Otro</option></select>
+        </div>
+        <div class="form-field"><label class="form-label">Describa su proyecto</label><textarea class="form-input" placeholder="Cuéntenos brevemente sobre su proyecto y en qué etapa se encuentra..."></textarea></div>
+        <button class="form-submit" onclick="submitForm()">Solicitar evaluación inicial →</button>
+      </div>
+      <div class="form-confirm" id="form-confirm">
+        <div class="form-confirm-label">Mensaje enviado</div>
+        <div class="form-confirm-title">Nos pondremos en contacto a la brevedad</div>
+        <div class="form-confirm-sub">Gracias por contactar a Fitocann. Revisaremos su consulta y responderemos en un plazo de 24 horas hábiles.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo" onclick="navigate('home')">Fito<span>cann</span></div>
+      <div class="footer-tagline">Regulación · Ciencia · Estrategia</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li onclick="navigate('servicios')">Consultoría Regulatoria</li>
+          <li onclick="navigate('servicios')">Permisos de Cultivo</li>
+          <li onclick="navigate('servicios')">Registros Sanitarios</li>
+          <li onclick="navigate('servicios')">Farmacia Cannábica</li>
+          <li onclick="navigate('servicios')">Alimentos con Cáñamo</li>
+          <li onclick="navigate('servicios')">Cosméticos y PI</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li onclick="navigate('nosotros')">Sobre Fitocann</li>
+          <li onclick="navigate('servicios')">Industrias</li>
+          <li onclick="navigate('contacto')">Contacto</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul><li>Chile</li><li>contacto@fitocann.cl</li></ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Fitocann · Todos los derechos reservados</div>
+    <div class="footer-copy">Consultoría regulatoria de cannabis · Chile</div>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px';
+  setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+});
+
+// NAV SCROLL
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// NAVIGATION
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // re-trigger fade-up for new page
+  setTimeout(() => initFadeUp(), 100);
+}
+
+// FADE UP
+function initFadeUp() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.page.active .fade-up:not(.visible)').forEach(el => obs.observe(el));
+}
+initFadeUp();
+
+// CONTACT FORM
+function submitForm() {
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('form-confirm').classList.add('active');
+}
+</script>
+</body>
+</html>
